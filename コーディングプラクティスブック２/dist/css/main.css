@@ -1,0 +1,25 @@
+body,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+ul,
+figure {
+  margin: 0;
+  padding: 0;
+}
+
+:root {
+  font-size: 100px;
+}
+
+body {
+  color: #222222;
+  font-size: 0.16rem;
+  font-family: sans-serif;
+  line-height: 1.8;
+}
+/*# sourceMappingURL=map/main.css.map */

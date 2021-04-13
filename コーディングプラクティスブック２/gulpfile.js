@@ -132,57 +132,57 @@ const jsBabel = () => {
 };
 
 // 画像圧縮
-const imagesCompress = () => {
-	return src(paths.images.src, {
-			// 更新があった場合に処理
-			since: lastRun(imagesCompress),
-		})
-		.pipe(
-			plumber({
-				errorHandler: notify.onError("Error: <%= error.message %>"),
-			})
-		)
-		.pipe(
-			imagemin(
-				[
-					// JPG
-					imageminMozjpeg({
-						quality: 80,
-					}),
-					// PNG
-					imageminPngquant(
-						[0.7, 0.8] //画質の最小,最大
-					),
-					// GIF
-					imageminGifsicle(),
-					// SVG
-					imageminSvgo({
-						plugins: [{
-								//フォトショやイラレで書きだされるviewboxを消さない
-								removeViewbox: false,
-							},
-							{
-								// メタデータを削除しない
-								removeMetadata: false,
-							},
-							{
-								// 不明な要素や属性を削除しない
-								removeUnknownsAndDefaults: false,
-							},
-							{
-								// <path>に変換しない
-								convertShapeToPath: false,
-							}
-						],
-					}),
-				], {
-					//ターミナルへの情報出力非表示
-					verbose: true,
-				}
-			)
-		)
-		.pipe(dest(paths.images.dist));
-};
+// const imagesCompress = () => {
+// 	return src(paths.images.src, {
+// 			// 更新があった場合に処理
+// 			since: lastRun(imagesCompress),
+// 		})
+// 		.pipe(
+// 			plumber({
+// 				errorHandler: notify.onError("Error: <%= error.message %>"),
+// 			})
+// 		)
+// 		.pipe(
+// 			imagemin(
+// 				[
+// 					// JPG
+// 					imageminMozjpeg({
+// 						quality: 80,
+// 					}),
+// 					// PNG
+// 					imageminPngquant(
+// 						[0.7, 0.8] //画質の最小,最大
+// 					),
+// 					// GIF
+// 					imageminGifsicle(),
+// 					// SVG
+// 					imageminSvgo({
+// 						plugins: [{
+// 								//フォトショやイラレで書きだされるviewboxを消さない
+// 								removeViewbox: false,
+// 							},
+// 							{
+// 								// メタデータを削除しない
+// 								removeMetadata: false,
+// 							},
+// 							{
+// 								// 不明な要素や属性を削除しない
+// 								removeUnknownsAndDefaults: false,
+// 							},
+// 							{
+// 								// <path>に変換しない
+// 								convertShapeToPath: false,
+// 							}
+// 						],
+// 					}),
+// 				], {
+// 					//ターミナルへの情報出力非表示
+// 					verbose: true,
+// 				}
+// 			)
+// 		)
+// 		.pipe(dest(paths.images.dist));
+// };
 
 // ローカルサーバー起動
 const browserSyncFunc = (done) => {
@@ -209,11 +209,11 @@ const watchFiles = () => {
 	watch(paths.html.src, series(htmlFormat, browserReloadFunc));
 	watch(paths.styles.src, series(sassCompile));
 	watch(paths.scripts.src, series(jsBabel, browserReloadFunc));
-	watch(paths.images.src, series(imagesCompress, browserReloadFunc));
+	// watch(paths.images.src, series(imagesCompress, browserReloadFunc));
 };
 
 // npx gulp実行処理
 exports.default = series(
-	parallel(htmlFormat, sassCompile, jsBabel, imagesCompress),
+	parallel(htmlFormat, sassCompile, jsBabel),
 	parallel(watchFiles, browserSyncFunc)
 );
