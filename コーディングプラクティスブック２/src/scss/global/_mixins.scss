@@ -1,1 +1,38 @@
-@use 'variables' as *;
+@use 'variables'as *;
+
+@mixin pc {
+	@media screen and (min-width:768px) {
+		@content;
+	}
+}
+
+@mixin mq($breakpoint) {
+	@if map-has-key($breakpoints, $breakpoint) {
+		@media screen and #{inspect(map-get($breakpoints, $breakpoint))} {
+			@content;
+		}
+	}
+
+	// マップ型で定義されていない値が呼び出された時はエラーを返す
+	@else {
+		@error "指定されたブレークポイントは定義されていません。"+"指定できるブレークポイントは次のとおりです。 -> #{map-keys($breakpoints)}";
+	}
+}
+
+@mixin animation($name,
+	$duration: 1s,
+	$timing-function: ease,
+	$delay: 0s,
+	$iteration-count: 1,
+	$direction: normal,
+	$fill-mode: forwards) {
+	animation: {
+		name: $name;
+		duration: $duration;
+		timing-function: $timing-function;
+		delay: $delay;
+		iteration-count: $iteration-count;
+		direction: $direction;
+		fill-mode: $fill-mode;
+	}
+}

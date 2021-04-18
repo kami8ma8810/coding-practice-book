@@ -126,9 +126,9 @@ const jsBabel = () => {
 			})
 		)
 		.pipe(dest(paths.scripts.dist))
-		// JS圧縮
-		.pipe(uglify())
-		.pipe(dest(paths.scripts.dist));
+	// JS圧縮
+	// .pipe(uglify())
+	// .pipe(dest(paths.scripts.dist));
 };
 
 // 画像圧縮

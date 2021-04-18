@@ -5,7 +5,19 @@ $midgray:#414141;
 $gray:#888888;
 $white:#ffffff;
 
-// サイズの基準 1rem=100px
-:root {
-	font-size: 100px;
-}
+// $rootDir: '/promotion/special_sites/drgrip_ace/';
+// $imgDir: $rootDir+'img/';
+
+// 画像パス
+$imgDir: "../img/";
+
+// ブレイクポイント
+$breakpoints: ('xs': (min-width: 0),
+	'sm': (min-width: 576px),
+	'md': (min-width: 768px),
+	'lg': (min-width: 992px),
+	'xl': (min-width: 1200px),
+	'xxl': (min-width: 1400px)) !default;
+
+// 左右の余白
+$sideSpace:6vw;

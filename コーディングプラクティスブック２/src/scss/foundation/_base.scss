@@ -6,3 +6,139 @@ body {
 	font-family: sans-serif;
 	line-height: 1.8;
 }
+
+html,
+body,
+.hero {
+	height: 100%;
+}
+
+body {
+	overflow-y: scroll;
+}
+
+// サイズの基準 1rem=100px
+:root {
+	font-size: 100px;
+}
+
+/*  ---コンテンツ--- */
+
+/* コンテナ */
+.container {
+	padding: .68rem $sideSpace;
+
+	&.menu,
+	&.news {
+		@include mq(md) {
+			padding-top: 1rem;
+			padding-bottom: 1rem;
+		}
+	}
+
+	h2 {
+		font-family: 'Montserrat', sans-serif;
+		font-size: .26rem;
+		letter-spacing: .179em;
+		line-height: 1;
+
+		@include mq(md) {
+			font-size: .42rem;
+		}
+
+	}
+
+	&.hours h2 {
+		letter-spacing: 0;
+
+		@include mq(md) {
+			font-size: .32rem;
+		}
+	}
+
+	&.info h2 img {
+		width: 2.44rem;
+	}
+
+	&.menu,
+	&.news,
+	&.hours {
+		h2+p {
+			font-size: .13rem;
+
+			@include mq(md) {
+				font-size: .2rem;
+			}
+		}
+	}
+
+	&.info h2+p {
+		color: $midgray;
+		font-weight: bold;
+		letter-spacing: .516em;
+	}
+
+	&.menu,
+	&.news,
+	&.hours {
+		h2::after {
+			content: "";
+			display: block;
+			width: .56rem;
+			height: 4px;
+			margin-top: .17rem;
+			margin-bottom: .1rem;
+			background-color: $primary;
+
+			@include mq(md) {
+				width: .85rem;
+				margin-top: .23rem;
+				margin-bottom: .14rem;
+			}
+		}
+	}
+
+	&.hours {
+		h2::after {
+			width: .28rem;
+			margin-left: auto;
+			margin-right: auto;
+		}
+	}
+
+}
+
+/* food and drink */
+
+
+/* what's new */
+.news {
+	background-image: url(#{$imgDir}texture.jpg);
+	background-repeat: repeat;
+}
+
+/* hours */
+.hours {
+	background-image: url(#{$imgDir}shop.jpg);
+	background-repeat: no-repeat;
+	background-position: center;
+	background-size: cover;
+	color: $white;
+	text-align: center;
+}
+
+/* カフェ情報 */
+.info {
+	background-color: $primary;
+	text-align: center;
+}
+
+/* footer */
+.footer {
+	height: 89px;
+	background-color: $darkgray;
+	color: $white;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}

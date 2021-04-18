@@ -1,0 +1,250 @@
+@use '../global'as *;
+
+.hero {
+	background-image: url("#{$imgDir}cafe.jpg");
+	background-position: center;
+	background-size: cover;
+	background-color: $darkgray;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	position: relative;
+
+	&::after {
+		content: url(#{$imgDir}arrow.svg);
+		display: block;
+		width: .16rem;
+		@include viewScale(width, 375px, 16px, 768px, 31px);
+		padding: .18rem .15rem .1rem;
+		@include viewScale(padding-top, 375px, 18px, 768px, 35px);
+		@include viewScale(padding-right, 375px, 15px, 768px, 31px);
+		@include viewScale(padding-left, 375px, 15px, 768px, 31px);
+		@include viewScale(padding-bottom, 375px, 10px, 768px, 16px);
+		background-color: $white;
+		border-radius: 50% 50% 0 0;
+		line-height: 0;
+		position: absolute;
+		right: 0;
+		bottom: 0;
+		left: 0;
+		margin: auto;
+
+		@include mq(md) {
+			width: .31rem;
+			padding: .35rem .31rem .16rem;
+		}
+	}
+
+	@include mq(md) {
+		justify-content: flex-end;
+	}
+
+	h1 {
+		@include mq(md) {
+			width: 50%;
+			text-align: center;
+		}
+	}
+}
+
+.header {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 100;
+	width: 100%;
+	height: 100px;
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+	box-sizing: border-box;
+	padding-left: $sideSpace;
+	padding-right: $sideSpace;
+
+	.site {
+		img {
+			width: 1.25rem;
+			@include viewScale(width, 375px, 125px, 768px, 226px);
+
+			@include mq(md) {
+				width: 2.26rem;
+			}
+		}
+	}
+
+	// ナビゲーションボタン
+	.nav-button {
+		box-sizing: content-box;
+		padding: 0;
+		outline: none;
+		border: none;
+		background: none;
+		width: 29px;
+		height: 20px;
+		cursor: pointer;
+		color: $white;
+
+		@include mq(md) {
+			display: none;
+		}
+
+		&::before,
+		&::after {
+			content: "";
+			display: block;
+			height: 1px;
+			background-color: currentColor;
+			transform: translateY(10px);
+			transition: .3s ease-in-out;
+		}
+
+		&::before {
+			transform: translateY(-10px);
+			box-shadow: 0 10px currentColor;
+		}
+	}
+
+	// ドロワークローズ
+	.nav {
+		position: fixed;
+		top: 0;
+		right: 0;
+		width: 100%;
+		height: 100vh;
+		color: $white;
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		transition: .4s ease-out;
+		z-index: -1;
+
+		@include mq(md) {
+			position: relative;
+			left: auto;
+			width: auto;
+			height: auto;
+		}
+
+		ul {
+			list-style: none;
+			margin-bottom: 10vh;
+
+			@include mq(md) {
+				display: flex;
+				color: $white;
+				margin-bottom: 0;
+			}
+		}
+
+		li {
+			opacity: 0;
+			transform: translateX(16px);
+
+			@include mq(md) {
+				opacity: 1;
+				transform: translateX(0);
+			}
+		}
+
+		li:not(:last-child) {
+			margin-bottom: 20px;
+
+			@include mq(md) {
+				margin-bottom: 0;
+			}
+		}
+
+		li:not(:first-child) {
+			@include mq(md) {
+				margin-left: .35rem;
+			}
+
+			@include mq(lg) {
+				margin-left: .55rem;
+			}
+		}
+	}
+
+	.nav-bg {
+		content: "";
+		width: 3000px;
+		height: 3000px;
+		margin-right: -2000px;
+		margin-top: -2000px;
+		top: 0;
+		right: 0;
+		display: block;
+		position: fixed;
+		background: rgba(0, 0, 0, 0.8);
+		-webkit-border-radius: 50%;
+		border-radius: 50%;
+		-webkit-transition: all .6s ease-out;
+		transition: all .6s ease-out;
+		-webkit-backface-visibility: hidden;
+		backface-visibility: hidden;
+		-webkit-transform: scale(.001);
+		transform: scale(.001);
+	}
+}
+
+// ドロワーオープン
+.open {
+
+	.header {
+		position: relative;
+		margin-bottom: -100px;
+	}
+
+	.nav-button {
+		z-index: 1000;
+
+		&::before {
+			transform: rotate(-45deg);
+			box-shadow: none;
+		}
+
+		&::after {
+			transform: rotate(45deg);
+			box-shadow: none;
+		}
+	}
+
+	.nav {
+		z-index: 1;
+
+		li {
+
+			@include animation($name: fadeInLeft,
+				$duration: 0.5s,
+				$timing-function: cubic-bezier(0.39, 1.57, 0.58, 1),
+				$fill-mode: forwards);
+
+			@for $i from 1 through 4 {
+				&:nth-child(#{$i}) {
+					animation-delay: $i * 0.2s;
+				}
+			}
+		}
+	}
+
+	.nav-bg {
+		display: block;
+		-webkit-transform: scale(2);
+		transform: scale(2);
+		-webkit-transition: all .8s ease-out;
+		transition: all .8s ease-out;
+	}
+
+}
+
+@keyframes fadeInLeft {
+	0% {
+		opacity: 0;
+		transform: translateX(20%);
+	}
+
+	100% {
+		opacity: 1;
+		transform: translateX(0);
+	}
+}
